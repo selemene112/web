@@ -1,0 +1,12 @@
+.navbar {
+  background-image: url(/home/selemene/project/portofolio/img/navbar.jpg);
+}
+
+.jumbotron {
+  padding: 3rem;
+  background-image: url(/home/selemene/project/portofolio/img/trojan.jpg);
+}
+.jumbotron .container {
+  position: relative;
+  top: 5px;
+}
