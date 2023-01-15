@@ -1,10 +1,10 @@
 .navbar {
-  background-image: url(/home/selemene/project/portofolio/img/navbar.jpg);
+  background-image: url(web/img/navbar.jpg);
 }
 
 .jumbotron {
   padding: 3rem;
-  background-image: url(/home/selemene/project/portofolio/img/trojan.jpg);
+  background-image: url(web/img/trojan.jpg);
 }
 .jumbotron .container {
   position: relative;

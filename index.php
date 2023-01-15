@@ -1,15 +1,65 @@
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// connection databases
+
+session_start();
+$koneksi = mysqli_connect("localhost","admin","admin","login");
+ 
+// Check connection
+if (mysqli_connect_errno()){
+        echo "Koneksi database gagal : " . mysqli_connect_error();
+}
+
+
+
+
+// menangkap data yang dikirim dari form
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// menyeleksi data admin dengan username dan password yang sesuai
+$data = mysqli_query($koneksi,"select * from user where username='$username' and password='$password'");
+
+// menghitung jumlah data yang ditemukan
+$cek = mysqli_num_rows($data);
+
+if($cek > 0){
+
+ session_start();
+        $_SESSION['username'] = $username;
+	$_SESSION['status'] = "login";
+       #header('Location:yadi.php');
+	# $login = 'login ';
+	echo "login ";
+        exit;
+    } else {
+        // Login failed
+        $error = 'Incorrect username or password';
+    }
+
+// cba 
+	#$_SESSION['username'] = $username;
+	#$_SESSION['status'] = "login";
+	#header("location:https://id-id.facebook.com/");
+	#echo "login berhasil";
+#}else{
+	#echo "belum login";
+}
+ 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+   
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap CSS -->
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-<!-- MY CSS -->
 <link rel="stylesheet" href="style.css">
-<!-- AKHIR CSS -->
+
 
     <title>PORTOFOLIO-Muhammad Ariyanda</title>
   </head>
@@ -21,7 +71,7 @@
     <nav class="navbar navbar-expand-lg shadow-lg navbar-light" style="background-color: #00ff62">
       <div class="container">
         <!-- navbar logo -->
-        <img src="/home/selemene/project/portofolio/img/saya.jpeg" alt="" width="50" height="50" class="d-inline-block align-text-top rounded-circle md" />
+        <img src="web/img/saya.jpeg" alt="" width="50" height="50" class="d-inline-block align-text-top rounded-circle md" />
         <a class="navbar-brand" href="#">   Muhammad Ariyanda Z </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -51,33 +101,51 @@
     <!-- JUMBO TRON -->
     <div class="jumbotron text-center ">
       <div class="container">
-        <img src="/home/selemene/project/portofolio/img/saya.jpeg" alt="" width="150" height="150" class="img-thumbnail rounded-circle" />
+        <img src="web/img/saya.jpeg" alt="" width="150" height="150" class="img-thumbnail rounded-circle" />
         <h1 class="display-4">Muhammad Ariyanda Zulyadiansyah</h1>
         <p class="lead">Web Programmer | Networking </p>
         
       </div>
      </div>
     </div>
+	<?php 
+	if(isset($_GET['pesan'])){
+		if($_GET['pesan'] == "gagal"){
+			echo "Login gagal! username dan password salah!";
+		}else if($_GET['pesan'] == "logout"){
+			echo "Anda telah berhasil logout";
+		}else if($_GET['pesan'] == "belum_login"){
+			echo "Anda harus login untuk mengakses halaman admin";
+		}
+	}
+	?>
 
-      <!--FORM LOGIN -->
-      <form>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <!--END FORM LOGIN -->
 
+
+<!-- form uji coba  -->
+ <form action="/" method="post">
+       <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+<!-- END FORM -->
+
+
+
+
+
+
+
+
+
+
+
+
+<?php if (isset($error)) { echo $error; } ?>
+<?php if (isset($login)) { echo $login; } ?>
 
     <!-- END JUMBO TRON -->
     <!--  -->
